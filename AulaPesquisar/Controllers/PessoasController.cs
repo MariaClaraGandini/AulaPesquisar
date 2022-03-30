@@ -9,12 +9,27 @@ namespace AulaPesquisar.Controllers
 
         public PessoasController(Contexto _db)
         {
-            db = _db;   
+            db = _db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string query)
         {
-            return View();
+            if (string.IsNullOrEmpty(query))
+            {
+                return View(db.PESSOAS.ToList());
+            }
+            else
+            {
+
+                return View(db.PESSOAS.Where(a => a.nome.Contains(query) || a.cpf.Contains(query) || a.endereco.Contains(query)
+                // Shift + \ para fazer || , posso pesquisar por nome, cpf e endereço// 
+                ));
+            }
         }
     }
 }
+
+
+
+
+
